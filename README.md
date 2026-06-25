@@ -135,9 +135,9 @@ If this parameter is specified and the remaining logon data also exists (target 
 * HWTX3-SPRSL and HWHD3-NUMM are the field labels for batch input of the two required fields on the initial screen of transaction BH33, and they can be determined by calling the screen field help:
   | How to get the Dynpro field name for batch input |
 | --- |
-| <ins>Preferred Method</ins><br> * Place the cursor in the field, for example, "Number".<br> * Choose F1 and call the technical information.<br> * Choose the field description for batch input, screen fields HWTX3-SPRSL.<br><br><ins>Alternate Method to use when “no documentation available”</ins><br> * With the selection screen open, type **ctrl + s** to enter the variant screen.<br> * Then press the **Technical Name** button to toggle the display of the technical name for all of the selection screen fields. |
+| <ins>Preferred Method</ins><br> * Place the cursor in the field, for example, "Number".<br> * Choose F1 and call the technical information.<br> * Choose the field description for batch input, screen fields _HWTX3-SPRSL_.<br><br><ins>Alternate Method to use when “no documentation available”</ins><br> * With the selection screen open, type **ctrl + s** to enter the variant screen.<br> * Then press the **Technical Name** button to toggle the display of the technical name for all of the selection screen fields. |
 
-  The asterisk character <ins>*****</ins> before transaction code BH33 means that the initial screen is skipped when the transaction is started, provided that all required fields of the initial screen are filled with the parameter.
+  The asterisk character **<ins>*</ins>** before transaction code BH33 means that the initial screen is skipped when the transaction is started, provided that all required fields of the initial screen are filled with the parameter.
 
   Check the validity of the command string within " " by entering the following data in the OK code field of an SAP GUI window /n that is followed by this string as below:
     `/n*BH33 HWTX3-SPRSL=D; HWHD3-NUMM=49143;`
