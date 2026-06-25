@@ -76,7 +76,7 @@ The parameter variants ' or ...' specified below (for example, or -u=user ID) ar
 | --- | --- |
 | -version | displays the current version of the SAPshortcut. |
 | -help, -?	| The short help display for parameterization. |
-| -register	 | Registers the SAPshortcut in the Windows registration database. After the registration, Windows supports the following functions:<br><br>* Starting the shortcut by double-clicking the icon<br>* Logon/edit functions in the context menu of the icon<br>* New -> SAP shortcut in the context menu of the desktop<br><br>This is not used because you can simply perform registration by calling sapshcut.exe without parameters. Sapshortcut is also usually registered automatically when the GUI is installed. |
+| -register	 | Registers the SAPshortcut in the Windows registration database. After the registration, Windows supports the following functions:<ul><li>Starting the shortcut by double-clicking the icon</li><li>Logon/edit functions in the context menu of the icon</li><li>New -> SAP shortcut in the context menu of the desktop</li></ul>This is not used because you can simply perform registration by calling sapshcut.exe without parameters. Sapshortcut is also usually registered automatically when the GUI is installed. |
 | -edit c:\myshortcut.sap | starts the processing dialog of the SAPshortcut and writes the input data to the file c:\myshortcut.sap after you choose "Enter". You cannot log on using the SAPshortcut. |
 
 
@@ -133,56 +133,52 @@ If this parameter is specified and the remaining logon data also exists (target 
   * `-command="*BH33 HWTX3-SPRSL=D; HWHD3-NUMM=49143;"`
 
 * HWTX3-SPRSL and HWHD3-NUMM are the field labels for batch input of the two required fields on the initial screen of transaction BH33, and they can be determined by calling the screen field help:
-  | How to get the Dynpro field name for batch input |
+
+| How to get the Dynpro field name for batch input |
 | --- |
-| <ins>Preferred Method</ins><br> * Place the cursor in the field, for example, "Number".<br> * Choose F1 and call the technical information.<br> * Choose the field description for batch input, screen fields _HWTX3-SPRSL_.<br><br><ins>Alternate Method to use when “no documentation available”</ins><br> * With the selection screen open, type **ctrl + s** to enter the variant screen.<br> * Then press the **Technical Name** button to toggle the display of the technical name for all of the selection screen fields. |
+| <ins>Preferred Method</ins><ul><li>Place the cursor in the field, for example, "Number".</li><li>Choose F1 and call the technical information.</li><li>Choose the field description for batch input, screen fields _HWTX3-SPRSL_.</li></ul><br><ins>Alternate Method to use when “no documentation available”</ins><ul><li>With the selection screen open, type **ctrl + s** to enter the variant screen.</li><li>Then press the **Technical Name** button to toggle the display of the technical name for all of the selection screen fields.</li></ul> |
 
   The asterisk character **<ins>*</ins>** before transaction code BH33 means that the initial screen is skipped when the transaction is started, provided that all required fields of the initial screen are filled with the parameter.
 
   Check the validity of the command string within " " by entering the following data in the OK code field of an SAP GUI window /n that is followed by this string as below:
-    `/n*BH33 HWTX3-SPRSL=D; HWHD3-NUMM=49143;`
-  Then choose ENTER.
-  If this does not work using the direct OK code call, it cannot work in the case of shortcuts either.
+<br>    `/n*BH33 HWTX3-SPRSL=D; HWHD3-NUMM=49143;`
+<br>  Then choose ENTER.
+<br>  If this does not work using the direct OK code call, it cannot work in the case of shortcuts either.
 
 *** For a parameter transaction such as F-01 that calls a native transaction (FBM1) with default values for one or more screen fields, or for a variant transaction such as YVA03 that is created using transaction SHD0 for the native transaction such as VA03 with a transaction variant, the default values **CANNOT** be written to the corresponding field for the transaction call with parameterusing OK-CODE as:
-    `/n*F-01 BKPF-BUKRS=1000;    or    /n*YVA03 VBAK-VBELN=1234;`
-  You must enter the following OK-CODE instead:
-    `/n*F-01 BKPF-BUKRS=1000;    or    /n*YVA03 VBAK-VBELN=1234;`
-  Therefore, parameter transactions and variant transactions of this type cannot be populated correctly with default values by Sapshortcut. You should always enter the native transaction such as
-    `-command="*FBM1 BKPF-BUKRS=1000;"`
-      instead of
-    `-command="*F-01 BKPF-BUKRS=1000;"`
+<br>    `/n*F-01 BKPF-BUKRS=1000;    or    /n*YVA03 VBAK-VBELN=1234;`
+<br>  You must enter the following OK-CODE instead:
+<br>    `/n*F-01 BKPF-BUKRS=1000;    or    /n*YVA03 VBAK-VBELN=1234;`
+<br>  Therefore, parameter transactions and variant transactions of this type cannot be populated correctly with default values by Sapshortcut. You should always enter the native transaction such as
+<br>    `-command="*FBM1 BKPF-BUKRS=1000;"`
+<br>      instead of
+<br>    `-command="*F-01 BKPF-BUKRS=1000;"`
     
 To determine whether the transaction is a parameter transaction such as F-01 or a variant transaction:
-  * call transaction SM31,
-  * specify the table name TSTC,
-  * and choose "Display".
-  * Then specify the transaction code and choose the glasses icon to display the data.
+  1. call transaction SM31,
+  2. specify the table name TSTC,
+  3. and choose "Display".
+  4. Then specify the transaction code and choose the glasses icon to display the data.
 
 
 #### b) Reports
 `-command="grbusg_3" -type=Report`
 
-  The variant of the report can be specified as follows:
-`-command="report variant"`
-  as in, for example
-`-command="RSPARAM TEST"`
-  if the ABAP report RSPARAM has the variant TEST.
-  
-  ***To be able to carry out the report, the SAPShortcut user must be authorized to call transaction SUB%.
+  The variant of the report can be specified as follows:<br>`-command="report variant"`
+  <br>as in, for example<br>`-command="RSPARAM TEST"`<br>  if the ABAP report RSPARAM has the variant TEST.<br>  ***To be able to carry out the report, the SAPShortcut user must be authorized to call transaction SUB%.
 
 
 #### c) System commands
-`-command="/H" -type=SystemCommand`
-  activates the debugger
-`-command="?STAT" -type=SystemCommand`
-  displays the status.
+`-command="/H" -type=SystemCommand`<br>  activates the debugger<br>`-command="?STAT" -type=SystemCommand`<br>  displays the status.
+
 
 ### -title="Any Title for the function" or -tit="My Test"
   specifies the title of the function to be started (this appears in the logon dialog for example).
 
+
 ### To diagnose the Sapshortcut program:
 `-trace=3 or -trc=3`
+
 
 ### To set the working directory:
 `-workdir="C:temp" or -wd="C:temp"`
@@ -191,17 +187,19 @@ To determine whether the transaction is a parameter transaction such as F-01 or 
  * For a later SAP GUI version:
    * This setting no longer has any effect. The trace files are always written to SAPWorkdir. You can change the standard SAPWorkdir with the SAP GUI Configuration program.
 
+
 ### To set the window size of the Sapgui:
 `-maxgui or -max`
-  sets the registry entry 'Maximize' under:
+<br>  sets the registry entry 'Maximize' under:
     _HKEY_CURRENT_USER\Software\SAP\SAPGUI Front\SAP Frontend Server\Window_
   to 1 so that the GUI is started in a maximum window after logging on (through Sapshortcut or Saplogon).
   
   This parameter can be used alone or together with other system-dependent parameters.
 
-### To set whether or not an existing connection should be reused
+To set whether or not an existing connection should be reused
  | Parameter | Description |
  | --- | --- |
  |-reuse=1 | reuse, default setting |
  |-reuse=0 | do not reuse |
+
   Reuse only occurs when the system ID specified (parameter -system=SID), client(parameter -client=###), user (parameter -user=...), and logon language (parameter -language=??) matches the ID of an existing connection. If a session from the existing connection has the initial screen, that is, transaction SESSION_MANAGER ("SAP Easy Access") or S000, the session is reused. Otherwise, a new session is started for the existing connection.
